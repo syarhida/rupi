@@ -20,7 +20,7 @@ export function MobileSummary({
         </p>
       </div>
 
-      <div className="rounded-2xl p-4 bg-neutral-900">
+      <div className="rounded-2xl p-4 bg-zinc-900">
         <div className="flex items-center space-x-2 text-rupi-negative">
           <ArrowDownLeft className="h-5 w-5" />
           <span className="text-sm font-semibold text-slate-50">Pengeluaran</span>
