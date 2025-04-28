@@ -1,17 +1,18 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { WalletCard } from '@/components/WalletCard';
-import { TransactionList, Transaction } from '@/components/TransactionList';
-import { FinancialSummary } from '@/components/FinancialSummary';
-import { CashflowChart } from '@/components/CashflowChart';
-import { generateSampleWallets, generateSampleTransactions, generateSampleCashflowData, generateId } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { WalletModal } from '@/components/WalletModal';
-import { TransactionModal } from '@/components/TransactionModal';
+import { TransactionList } from '@/components/TransactionList';
+import { MobileHeader } from '@/components/MobileHeader';
+import { MobileSummary } from '@/components/MobileSummary';
+import { generateSampleWallets, generateSampleTransactions, generateId } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
+import { Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { WalletModal } from '@/components/WalletModal';
+import { TransactionModal } from '@/components/TransactionModal';
+import { FinancialSummary } from '@/components/FinancialSummary';
+import { CashflowChart } from '@/components/CashflowChart';
 
 interface Wallet {
   id: string;
@@ -20,15 +21,24 @@ interface Wallet {
   color: string;
 }
 
+interface Transaction {
+  id: string;
+  type: 'income' | 'expense' | 'transfer';
+  amount: number;
+  description: string;
+  category: string;
+  date: string;
+  walletId: string;
+  toWalletId?: string;
+}
+
 const Index = () => {
-  // Initialize with sample data
   const [wallets, setWallets] = useState<Wallet[]>(generateSampleWallets());
   const [transactions, setTransactions] = useState<Transaction[]>(generateSampleTransactions());
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [transactionType, setTransactionType] = useState<'income' | 'expense' | 'transfer'>('expense');
   
-  const cashflowData = generateSampleCashflowData();
   const isMobile = useIsMobile();
   const { toast } = useToast();
   
@@ -129,91 +139,120 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            <p className="text-muted-foreground">Welcome to your financial overview</p>
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <Button 
-              onClick={() => setIsWalletModalOpen(true)}
-              className="flex-1 md:flex-none"
-              variant="outline"
-            >
-              <Plus size={18} className="mr-1" /> New Wallet
-            </Button>
-            <Button 
-              onClick={() => openTransactionModal('expense')}
-              variant="destructive"
-              className="flex-1 md:flex-none"
-            >
-              <Plus size={18} className="mr-1" /> Expense
-            </Button>
-            <Button 
-              onClick={() => openTransactionModal('income')}
-              className="flex-1 md:flex-none bg-rupi-positive hover:bg-rupi-positive/90"
-            >
-              <Plus size={18} className="mr-1" /> Income
-            </Button>
-          </div>
-        </div>
-
-        {/* Financial Summary */}
-        <FinancialSummary 
-          income={totalIncome} 
-          expense={totalExpense} 
-          balance={balance} 
-        />
+      <div className="space-y-4 px-4 pb-20 md:px-6">
+        {isMobile && (
+          <>
+            <MobileHeader balance={balance} />
+            <MobileSummary income={totalIncome} expense={totalExpense} />
+          </>
+        )}
         
-        {/* Wallets */}
-        <div>
-          <h2 className="text-xl font-bold mb-4">Your Wallets</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {wallets.map((wallet) => (
-              <WalletCard 
-                key={wallet.id} 
-                id={wallet.id}
-                name={wallet.name} 
-                balance={wallet.balance} 
-                color={wallet.color}
-              />
-            ))}
-            <button 
-              onClick={() => setIsWalletModalOpen(true)}
-              className="border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 h-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
-            >
-              <Plus size={24} />
-              <span className="mt-2">Add Wallet</span>
-            </button>
-          </div>
-        </div>
-        
-        {/* Cashflow Chart & Recent Transactions */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <CashflowChart data={cashflowData} />
-          
-          <div className="rupi-card">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Recent Transactions</h2>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => openTransactionModal('expense')}
-              >
-                <Plus size={18} className="mr-1" /> New
-              </Button>
+        {!isMobile && (
+          <>
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-2xl font-bold">Dashboard</h1>
+                <p className="text-muted-foreground">Welcome to your financial overview</p>
+              </div>
+              
+              <div className="flex flex-wrap gap-2">
+                <Button 
+                  onClick={() => setIsWalletModalOpen(true)}
+                  className="flex-1 md:flex-none"
+                  variant="outline"
+                >
+                  <Plus size={18} className="mr-1" /> New Wallet
+                </Button>
+                <Button 
+                  onClick={() => openTransactionModal('expense')}
+                  variant="destructive"
+                  className="flex-1 md:flex-none"
+                >
+                  <Plus size={18} className="mr-1" /> Expense
+                </Button>
+                <Button 
+                  onClick={() => openTransactionModal('income')}
+                  className="flex-1 md:flex-none bg-rupi-positive hover:bg-rupi-positive/90"
+                >
+                  <Plus size={18} className="mr-1" /> Income
+                </Button>
+              </div>
             </div>
-            <TransactionList 
-              transactions={transactions} 
-              limit={5}
-              showViewAll 
+
+            {/* Financial Summary */}
+            <FinancialSummary 
+              income={totalIncome} 
+              expense={totalExpense} 
+              balance={balance} 
             />
-          </div>
+            
+            {/* Wallets */}
+            <div>
+              <h2 className="text-xl font-bold mb-4">Your Wallets</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {wallets.map((wallet) => (
+                  <WalletCard 
+                    key={wallet.id} 
+                    id={wallet.id}
+                    name={wallet.name} 
+                    balance={wallet.balance} 
+                    color={wallet.color}
+                  />
+                ))}
+                <button 
+                  onClick={() => setIsWalletModalOpen(true)}
+                  className="border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 h-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                >
+                  <Plus size={24} />
+                  <span className="mt-2">Add Wallet</span>
+                </button>
+              </div>
+            </div>
+            
+            {/* Cashflow Chart & Recent Transactions */}
+            {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <CashflowChart data={cashflowData} />
+              
+              <div className="rupi-card">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Recent Transactions</h2>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => openTransactionModal('expense')}
+                  >
+                    <Plus size={18} className="mr-1" /> New
+                  </Button>
+                </div>
+                <TransactionList 
+                  transactions={transactions} 
+                  limit={5}
+                  showViewAll 
+                />
+              </div>
+            </div> */}
+          </>
+        )}
+
+        <div className="space-y-4">
+          <TransactionList 
+            transactions={transactions} 
+            showViewAll 
+          />
         </div>
       </div>
+
+      {/* Floating Action Button for mobile */}
+      {isMobile && (
+        <Button
+          onClick={() => openTransactionModal('expense')}
+          size="lg"
+          className="fixed bottom-20 right-4 h-14 w-14 rounded-full p-0"
+        >
+          <Plus className="h-6 w-6" />
+        </Button>
+      )}
 
       {/* Modals */}
       <WalletModal 
