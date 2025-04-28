@@ -8,7 +8,7 @@ interface MobileHeaderProps {
 export function MobileHeader({
   balance
 }: MobileHeaderProps) {
-  return <div className="space-y-2 pt-4">
+  return <div className="space-y-2 pt-4 py-0">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold text-slate-50">Hi there</h1>
         <Button variant="ghost" size="icon" className="rounded-full text-gray-950 bg-slate-50">
