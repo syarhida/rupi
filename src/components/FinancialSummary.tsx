@@ -18,7 +18,7 @@ export function FinancialSummary({
             <ArrowUpRight size={20} />
           </div>
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground">Total Income</p>
+            <p className="text-sm text-muted-foreground">Pemasukan</p>
             <p className="text-lg font-bold text-slate-50">{formatCurrency(income)}</p>
           </div>
         </div>
@@ -30,7 +30,7 @@ export function FinancialSummary({
             <ArrowDownLeft size={20} />
           </div>
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground">Total Expenses</p>
+            <p className="text-sm text-muted-foreground">Pengeluaran</p>
             <p className="text-lg font-bold text-slate-50">{formatCurrency(expense)}</p>
           </div>
         </div>
@@ -42,7 +42,7 @@ export function FinancialSummary({
             <Circle size={20} />
           </div>
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground">Net Balance</p>
+            <p className="text-sm text-muted-foreground">Saldo</p>
             <p className={`text-lg font-bold ${balance >= 0 ? 'text-rupi-positive' : 'text-rupi-negative'}`}>
               {formatCurrency(balance)}
             </p>

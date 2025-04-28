@@ -143,12 +143,12 @@ const Index = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-slate-50">Dashboard</h1>
+                <h1 className="text-2xl font-bold text-slate-50">Dasbor</h1>
                 <p className="text-muted-foreground">Welcome to your financial overview</p>
               </div>
               
               <div className="flex flex-wrap gap-2">
-                <Button onClick={() => setIsWalletModalOpen(true)} variant="outline" className="flex-1 md:flex-none text-slate-50">
+                <Button onClick={() => setIsWalletModalOpen(true)} variant="outline" className="flex-1 md:flex-none text-slate-50 px-0 text-center">
                   <Plus size={18} className="mr-1" /> New Wallet
                 </Button>
                 <Button onClick={() => openTransactionModal('expense')} variant="destructive" className="flex-1 md:flex-none">
