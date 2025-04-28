@@ -133,7 +133,7 @@ const Index = () => {
     setIsTransactionModalOpen(true);
   };
   return <Layout>
-      <div className="space-y-4 px-4 pb-20 md:px-6">
+      <div className="space-y-4 pb-20 md:px-6 px-0">
         {isMobile && <>
             <MobileHeader balance={balance} />
             <MobileSummary income={totalIncome} expense={totalExpense} />
