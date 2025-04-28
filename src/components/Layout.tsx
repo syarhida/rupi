@@ -11,7 +11,7 @@ export function Layout({
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background dark">
       {isMobile ? <div className="flex flex-col h-screen">
-          <main className="flex-1 overflow-y-auto no-scrollbar pb-16 px-[16px]">{children}</main>
+          <main className="flex-1 overflow-y-auto no-scrollbar pb-16 px-[16px] py-[16px]">{children}</main>
           <MobileNavbar />
         </div> : <div className="flex h-screen">
           <Sidebar />

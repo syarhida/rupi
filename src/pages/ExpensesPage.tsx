@@ -42,7 +42,7 @@ const ExpensesPage = () => {
   };
   return <Layout>
       <div className="space-y-6">
-        <div className="flex justify-between items-center px-[16px] py-[16px] mx-0">
+        <div className="flex justify-between items-center mx-0 px-0 py-0">
           <h1 className="text-2xl font-bold text-slate-50">Expenses</h1>
           <Button variant="destructive" onClick={() => setIsTransactionModalOpen(true)}>
             <Plus size={18} className="mr-1" /> New Expense
