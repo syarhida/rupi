@@ -66,33 +66,35 @@ export function TransactionList({ transactions, limit, showViewAll = false }: Tr
             <div className="space-y-2">
               {dayTransactions.map((transaction) => (
                 <div key={transaction.id} className="rupi-surface p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`rounded-full p-2 ${
-                        transaction.type === 'expense' ? 'bg-rupi-negative/10 text-rupi-negative' :
-                        transaction.type === 'income' ? 'bg-rupi-positive/10 text-rupi-positive' :
-                        'bg-muted text-muted-foreground'
-                      }`}>
-                        {transaction.type === 'expense' ? <ArrowDownLeft className="h-5 w-5" /> :
-                         transaction.type === 'income' ? <ArrowUpRight className="h-5 w-5" /> :
-                         <ArrowRight className="h-5 w-5" />}
-                      </div>
-                      <div>
+                  <div className="flex justify-between">
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-3">
+                        <div className={`rounded-full p-2 ${
+                          transaction.type === 'expense' ? 'bg-rupi-negative/10 text-rupi-negative' :
+                          transaction.type === 'income' ? 'bg-rupi-positive/10 text-rupi-positive' :
+                          'bg-muted text-muted-foreground'
+                        }`}>
+                          {transaction.type === 'expense' ? <ArrowDownLeft className="h-5 w-5" /> :
+                           transaction.type === 'income' ? <ArrowUpRight className="h-5 w-5" /> :
+                           <ArrowRight className="h-5 w-5" />}
+                        </div>
                         <p className="font-medium">{transaction.description}</p>
-                        <p className="text-sm text-muted-foreground">{transaction.category}</p>
+                      </div>
+                      <div className="flex items-center space-x-2 text-sm">
+                        <p className="text-muted-foreground">{transaction.category}</p>
+                        <span className={`font-medium ${
+                          transaction.type === 'expense' ? 'text-rupi-negative' :
+                          transaction.type === 'income' ? 'text-rupi-positive' :
+                          'text-muted-foreground'
+                        }`}>
+                          {transaction.type === 'expense' ? '-' : 
+                           transaction.type === 'income' ? '+' : ''}
+                          {formatCurrency(transaction.amount)}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Wallet className="h-4 w-4 text-muted-foreground" />
-                      <span className={`font-medium ${
-                        transaction.type === 'expense' ? 'text-rupi-negative' :
-                        transaction.type === 'income' ? 'text-rupi-positive' :
-                        'text-muted-foreground'
-                      }`}>
-                        {transaction.type === 'expense' ? '-' : 
-                         transaction.type === 'income' ? '+' : ''}
-                        {formatCurrency(transaction.amount)}
-                      </span>
+                    <div className="text-muted-foreground">
+                      <Wallet className="h-4 w-4" />
                     </div>
                   </div>
                 </div>
