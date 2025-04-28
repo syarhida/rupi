@@ -54,7 +54,7 @@ const SettingsPage = () => {
           
           <TabsContent value="preferences" className="space-y-6">
             <div className="rupi-card space-y-4">
-              <h2 className="text-xl font-bold">Regional Settings</h2>
+              <h2 className="text-xl font-bold text-slate-50">Regional Settings</h2>
               
               <div className="grid gap-2">
                 <Label htmlFor="currency">Currency</Label>
