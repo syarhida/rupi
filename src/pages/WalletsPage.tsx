@@ -37,8 +37,8 @@ const WalletsPage = () => {
   };
   return <Layout>
       <div className="space-y-6 px-px">
-        <div className="flex justify-between items-center px-[16px] py-[16px]">
-          <h1 className="text-2xl font-bold text-slate-50">Dompetku</h1>
+        <div className="flex justify-between items-center py-0 px-0">
+          <h1 className="text-2xl font-bold text-slate-50">Dompet Saya</h1>
           <Button onClick={() => setIsWalletModalOpen(true)}>
             <Plus size={18} className="mr-1" /> New Wallet
           </Button>
