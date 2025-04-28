@@ -13,7 +13,7 @@ export function MobileSummary({
       <div className="rounded-2xl p-4 bg-zinc-900">
         <div className="flex items-center space-x-2 text-rupi-positive">
           <ArrowUpRight className="h-5 w-5" />
-          <span className="text-slate-50 text-sm font-semibold">Income</span>
+          <span className="text-slate-50 text-sm font-semibold">Pemasukan</span>
         </div>
         <p className="mt-2 text-slate-50 font-bold text-lg">
           {formatCurrency(income)}
@@ -23,9 +23,9 @@ export function MobileSummary({
       <div className="rounded-2xl p-4 bg-neutral-900">
         <div className="flex items-center space-x-2 text-rupi-negative">
           <ArrowDownLeft className="h-5 w-5" />
-          <span className="text-neutral-950 text-sm font-semibold">Expenses</span>
+          <span className="text-sm font-semibold text-slate-50">Pengeluaran</span>
         </div>
-        <p className="mt-2 font-bold text-neutral-950 text-lg">
+        <p className="mt-2 font-bold text-lg text-slate-50">
           {formatCurrency(expense)}
         </p>
       </div>
