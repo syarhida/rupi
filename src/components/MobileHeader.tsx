@@ -11,7 +11,7 @@ export function MobileHeader({
   return <div className="space-y-2 pt-4">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold text-slate-50">Hi there</h1>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <Button variant="ghost" size="icon" className="rounded-full text-gray-950 bg-zinc-400 hover:bg-zinc-300">
           <ChevronDown className="h-5 w-5" />
         </Button>
       </div>
