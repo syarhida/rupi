@@ -1,17 +1,17 @@
-
 import React from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { ArrowDownLeft, ArrowUpRight, Circle } from 'lucide-react';
-
 interface FinancialSummaryProps {
   income: number;
   expense: number;
   balance: number;
 }
-
-export function FinancialSummary({ income, expense, balance }: FinancialSummaryProps) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+export function FinancialSummary({
+  income,
+  expense,
+  balance
+}: FinancialSummaryProps) {
+  return <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="rupi-card">
         <div className="flex items-center">
           <div className="bg-rupi-positive/10 text-rupi-positive rounded-full p-2 mr-3">
@@ -19,7 +19,7 @@ export function FinancialSummary({ income, expense, balance }: FinancialSummaryP
           </div>
           <div className="flex-1">
             <p className="text-sm text-muted-foreground">Total Income</p>
-            <p className="text-lg font-bold">{formatCurrency(income)}</p>
+            <p className="text-lg font-bold text-slate-50">{formatCurrency(income)}</p>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@ export function FinancialSummary({ income, expense, balance }: FinancialSummaryP
           </div>
           <div className="flex-1">
             <p className="text-sm text-muted-foreground">Total Expenses</p>
-            <p className="text-lg font-bold">{formatCurrency(expense)}</p>
+            <p className="text-lg font-bold text-slate-50">{formatCurrency(expense)}</p>
           </div>
         </div>
       </div>
@@ -49,6 +49,5 @@ export function FinancialSummary({ income, expense, balance }: FinancialSummaryP
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
