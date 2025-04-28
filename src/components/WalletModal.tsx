@@ -74,7 +74,7 @@ export function WalletModal({
             <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Cash Wallet" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="initial-balance">Initial Balance (Rp)</Label>
+            <Label htmlFor="initial-balance" className="rounded-2xl px-0">Initial Balance (Rp)</Label>
             <Input id="initial-balance" type="number" value={initialBalance} onChange={e => setInitialBalance(e.target.value)} placeholder="0" />
           </div>
           <div className="grid gap-2">
