@@ -48,7 +48,7 @@ const SettingsPage = () => {
                 </Select>
               </div>
               
-              <Button onClick={handleSaveSettings}>Save Changes</Button>
+              <Button onClick={handleSaveSettings} className="bg-emerald-500 hover:bg-emerald-400 text-slate-50">Simpan</Button>
             </div>
           </TabsContent>
           
