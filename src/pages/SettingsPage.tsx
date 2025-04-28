@@ -20,17 +20,17 @@ const SettingsPage = () => {
   };
   return <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-slate-50">Settings</h1>
+        <h1 className="text-2xl font-bold text-slate-50">Pengaturan</h1>
 
         <Tabs defaultValue="appearance" className="w-full">
           <TabsList className="grid grid-cols-2 mb-6">
-            <TabsTrigger value="appearance">Appearance</TabsTrigger>
-            <TabsTrigger value="preferences">Preferences</TabsTrigger>
+            <TabsTrigger value="appearance">Tampilan</TabsTrigger>
+            <TabsTrigger value="preferences">Preferensi</TabsTrigger>
           </TabsList>
           
           <TabsContent value="appearance" className="space-y-6">
             <div className="rupi-card space-y-4">
-              <h2 className="text-xl font-bold text-slate-50">Theme Customization</h2>
+              <h2 className="text-xl font-bold text-slate-50">Tema</h2>
               
               <div className="grid gap-2">
                 <Label htmlFor="accent-color">Accent Color</Label>
@@ -54,7 +54,7 @@ const SettingsPage = () => {
           
           <TabsContent value="preferences" className="space-y-6">
             <div className="rupi-card space-y-4">
-              <h2 className="text-xl font-bold text-slate-50">Regional Settings</h2>
+              <h2 className="text-xl font-bold text-slate-50">Wilayah</h2>
               
               <div className="grid gap-2">
                 <Label htmlFor="currency">Currency</Label>
@@ -70,7 +70,7 @@ const SettingsPage = () => {
                 </Select>
               </div>
               
-              <Button onClick={handleSaveSettings}>Save Changes</Button>
+              <Button onClick={handleSaveSettings} className="bg-emerald-500 hover:bg-emerald-400">Simpan</Button>
             </div>
           </TabsContent>
         </Tabs>
