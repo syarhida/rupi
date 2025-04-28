@@ -55,7 +55,7 @@ export function TransactionList({
       return <div key={date} className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-slate-50 text-base font-bold">{month} {day}</h3>
+                <h3 className="text-slate-50 font-bold text-sm">{month} {day}</h3>
                 <p className="text-muted-foreground text-sm font-semibold">{weekday}</p>
               </div>
               <span className={dayTotal >= 0 ? 'text-rupi-positive' : 'text-rupi-negative'}>
