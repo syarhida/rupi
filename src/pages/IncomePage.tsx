@@ -43,7 +43,7 @@ const IncomePage = () => {
   return <Layout>
       <div className="space-y-6">
         <div className="flex justify-between items-center px-0 py-0">
-          <h1 className="text-2xl font-bold text-slate-50">Income</h1>
+          <h1 className="text-2xl font-bold text-slate-50">Pemasukan</h1>
           <Button onClick={() => setIsTransactionModalOpen(true)} className="text-slate-50 bg-emerald-500 hover:bg-emerald-400 font-bold">
             <Plus size={18} className="mr-1" /> New Income
           </Button>
