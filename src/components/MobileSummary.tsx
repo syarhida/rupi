@@ -10,7 +10,7 @@ export function MobileSummary({
   expense
 }: MobileSummaryProps) {
   return <div className="grid grid-cols-2 gap-4">
-      <div className="rounded-2xl p-4 bg-sky-500">
+      <div className="rounded-2xl p-4 bg-zinc-900">
         <div className="flex items-center space-x-2 text-rupi-positive">
           <ArrowUpRight className="h-5 w-5" />
           <span className="text-slate-50 text-sm font-semibold">Income</span>
@@ -20,7 +20,7 @@ export function MobileSummary({
         </p>
       </div>
 
-      <div className="rounded-2xl p-4 bg-zinc-300">
+      <div className="rounded-2xl p-4 bg-neutral-900">
         <div className="flex items-center space-x-2 text-rupi-negative">
           <ArrowDownLeft className="h-5 w-5" />
           <span className="text-neutral-950 text-sm font-semibold">Expenses</span>
