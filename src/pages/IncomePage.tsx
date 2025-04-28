@@ -25,9 +25,9 @@ const IncomePage = () => {
   }) => {
     const now = new Date();
     
-    const newTransaction: Transaction = {
+    const newTransaction = {
       id: `tx-${generateId()}`,
-      type: 'income',
+      type: 'income' as const,
       amount: transactionData.amount,
       description: transactionData.description,
       category: transactionData.category,

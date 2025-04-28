@@ -25,9 +25,9 @@ const ExpensesPage = () => {
   }) => {
     const now = new Date();
     
-    const newTransaction: Transaction = {
+    const newTransaction = {
       id: `tx-${generateId()}`,
-      type: 'expense',
+      type: 'expense' as const,
       amount: transactionData.amount,
       description: transactionData.description,
       category: transactionData.category,
