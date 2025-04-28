@@ -1,0 +1,76 @@
+
+import React, { useState } from 'react';
+import { Layout } from '@/components/Layout';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import { TransactionModal } from '@/components/TransactionModal';
+import { TransactionList, Transaction } from '@/components/TransactionList';
+import { generateSampleTransactions, generateSampleWallets, generateId } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+
+const ExpensesPage = () => {
+  const [transactions, setTransactions] = useState(
+    generateSampleTransactions().filter(tx => tx.type === 'expense')
+  );
+  const [wallets] = useState(generateSampleWallets());
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleAddTransaction = (transactionData: {
+    type: 'income' | 'expense' | 'transfer';
+    amount: number;
+    description: string;
+    category: string;
+    walletId: string;
+  }) => {
+    const now = new Date();
+    
+    const newTransaction: Transaction = {
+      id: `tx-${generateId()}`,
+      type: 'expense',
+      amount: transactionData.amount,
+      description: transactionData.description,
+      category: transactionData.category,
+      date: now.toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }),
+      walletId: transactionData.walletId
+    };
+    
+    setTransactions([newTransaction, ...transactions]);
+    
+    toast({
+      title: 'Expense added',
+      description: `${transactionData.description} has been recorded successfully.`
+    });
+  };
+
+  return (
+    <Layout>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Expenses</h1>
+          <Button variant="destructive" onClick={() => setIsTransactionModalOpen(true)}>
+            <Plus size={18} className="mr-1" /> New Expense
+          </Button>
+        </div>
+
+        <div className="rupi-card">
+          <TransactionList transactions={transactions} />
+        </div>
+      </div>
+
+      <TransactionModal
+        open={isTransactionModalOpen}
+        onClose={() => setIsTransactionModalOpen(false)}
+        onSave={handleAddTransaction}
+        wallets={wallets.map(wallet => ({ id: wallet.id, name: wallet.name }))}
+        type="expense"
+      />
+    </Layout>
+  );
+};
+
+export default ExpensesPage;

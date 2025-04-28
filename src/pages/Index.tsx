@@ -1,13 +1,235 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import { Layout } from '@/components/Layout';
+import { WalletCard } from '@/components/WalletCard';
+import { TransactionList, Transaction } from '@/components/TransactionList';
+import { FinancialSummary } from '@/components/FinancialSummary';
+import { CashflowChart } from '@/components/CashflowChart';
+import { generateSampleWallets, generateSampleTransactions, generateSampleCashflowData, generateId } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import { WalletModal } from '@/components/WalletModal';
+import { TransactionModal } from '@/components/TransactionModal';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/hooks/use-toast';
+
+interface Wallet {
+  id: string;
+  name: string;
+  balance: number;
+  color: string;
+}
 
 const Index = () => {
+  // Initialize with sample data
+  const [wallets, setWallets] = useState<Wallet[]>(generateSampleWallets());
+  const [transactions, setTransactions] = useState<Transaction[]>(generateSampleTransactions());
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
+  const [transactionType, setTransactionType] = useState<'income' | 'expense' | 'transfer'>('expense');
+  
+  const cashflowData = generateSampleCashflowData();
+  const isMobile = useIsMobile();
+  const { toast } = useToast();
+  
+  // Calculate financial summary
+  const totalIncome = transactions
+    .filter(tx => tx.type === 'income')
+    .reduce((sum, tx) => sum + tx.amount, 0);
+    
+  const totalExpense = transactions
+    .filter(tx => tx.type === 'expense')
+    .reduce((sum, tx) => sum + tx.amount, 0);
+    
+  const balance = totalIncome - totalExpense;
+
+  // Add new wallet
+  const handleAddWallet = (walletData: { name: string; initialBalance: number; color: string }) => {
+    const newWallet: Wallet = {
+      id: `wallet-${generateId()}`,
+      name: walletData.name,
+      balance: walletData.initialBalance,
+      color: walletData.color
+    };
+    
+    setWallets([...wallets, newWallet]);
+    
+    toast({
+      title: "Wallet created",
+      description: `Your ${walletData.name} wallet has been created successfully.`
+    });
+  };
+
+  // Add new transaction
+  const handleAddTransaction = (transactionData: {
+    type: 'income' | 'expense' | 'transfer';
+    amount: number;
+    description: string;
+    category: string;
+    walletId: string;
+    toWalletId?: string;
+  }) => {
+    const now = new Date();
+    
+    // Create new transaction
+    const newTransaction: Transaction = {
+      id: `tx-${generateId()}`,
+      type: transactionData.type,
+      amount: transactionData.amount,
+      description: transactionData.description,
+      category: transactionData.category,
+      date: now.toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }),
+      walletId: transactionData.walletId,
+      toWalletId: transactionData.toWalletId
+    };
+    
+    // Add transaction to list
+    setTransactions([newTransaction, ...transactions]);
+    
+    // Update wallet balances
+    setWallets(wallets.map(wallet => {
+      if (wallet.id === transactionData.walletId) {
+        // Source wallet
+        let newBalance = wallet.balance;
+        
+        if (transactionData.type === 'income') {
+          newBalance += transactionData.amount;
+        } else if (transactionData.type === 'expense') {
+          newBalance -= transactionData.amount;
+        } else if (transactionData.type === 'transfer') {
+          newBalance -= transactionData.amount;
+        }
+        
+        return { ...wallet, balance: newBalance };
+      } else if (wallet.id === transactionData.toWalletId) {
+        // Destination wallet for transfers
+        return { ...wallet, balance: wallet.balance + transactionData.amount };
+      }
+      
+      return wallet;
+    }));
+    
+    // Show success notification
+    toast({
+      title: `${transactionData.type === 'income' ? 'Income' : 
+              transactionData.type === 'expense' ? 'Expense' : 'Transfer'} added`,
+      description: `${transactionData.description} has been recorded successfully.`
+    });
+  };
+
+  // Open transaction modal with specific type
+  const openTransactionModal = (type: 'income' | 'expense' | 'transfer') => {
+    setTransactionType(type);
+    setIsTransactionModalOpen(true);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <Layout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+            <p className="text-muted-foreground">Welcome to your financial overview</p>
+          </div>
+          
+          <div className="flex flex-wrap gap-2">
+            <Button 
+              onClick={() => setIsWalletModalOpen(true)}
+              className="flex-1 md:flex-none"
+              variant="outline"
+            >
+              <Plus size={18} className="mr-1" /> New Wallet
+            </Button>
+            <Button 
+              onClick={() => openTransactionModal('expense')}
+              variant="destructive"
+              className="flex-1 md:flex-none"
+            >
+              <Plus size={18} className="mr-1" /> Expense
+            </Button>
+            <Button 
+              onClick={() => openTransactionModal('income')}
+              className="flex-1 md:flex-none bg-rupi-positive hover:bg-rupi-positive/90"
+            >
+              <Plus size={18} className="mr-1" /> Income
+            </Button>
+          </div>
+        </div>
+
+        {/* Financial Summary */}
+        <FinancialSummary 
+          income={totalIncome} 
+          expense={totalExpense} 
+          balance={balance} 
+        />
+        
+        {/* Wallets */}
+        <div>
+          <h2 className="text-xl font-bold mb-4">Your Wallets</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {wallets.map((wallet) => (
+              <WalletCard 
+                key={wallet.id} 
+                id={wallet.id}
+                name={wallet.name} 
+                balance={wallet.balance} 
+                color={wallet.color}
+              />
+            ))}
+            <button 
+              onClick={() => setIsWalletModalOpen(true)}
+              className="border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 h-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+            >
+              <Plus size={24} />
+              <span className="mt-2">Add Wallet</span>
+            </button>
+          </div>
+        </div>
+        
+        {/* Cashflow Chart & Recent Transactions */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <CashflowChart data={cashflowData} />
+          
+          <div className="rupi-card">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Recent Transactions</h2>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => openTransactionModal('expense')}
+              >
+                <Plus size={18} className="mr-1" /> New
+              </Button>
+            </div>
+            <TransactionList 
+              transactions={transactions} 
+              limit={5}
+              showViewAll 
+            />
+          </div>
+        </div>
       </div>
-    </div>
+
+      {/* Modals */}
+      <WalletModal 
+        open={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+        onSave={handleAddWallet}
+      />
+      
+      <TransactionModal
+        open={isTransactionModalOpen}
+        onClose={() => setIsTransactionModalOpen(false)}
+        onSave={handleAddTransaction}
+        wallets={wallets.map(wallet => ({ id: wallet.id, name: wallet.name }))}
+        type={transactionType}
+      />
+    </Layout>
   );
 };
 
