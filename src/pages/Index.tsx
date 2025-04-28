@@ -144,7 +144,7 @@ const Index = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h1 className="text-2xl font-bold text-slate-50">Dasbor</h1>
-                <p className="text-muted-foreground">Welcome to your financial overview</p>
+                <p className="text-muted-foreground">Selamat datang!</p>
               </div>
               
               <div className="flex flex-wrap gap-2">
