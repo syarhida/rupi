@@ -28,11 +28,11 @@
     --ring: 142.1 76.2% 36.3%;
 
     /* Rupi theme colors */
-    --rupi-accent: 142.1 70.6% 45.3%;  /* Emerald Green */
+    --rupi-accent: 142.1 40% 65%;  /* Softer Emerald Green */
     --rupi-accent-foreground: 0 0% 100%;
-    --rupi-accent-muted: 142.1 46.1% 85.3%;
-    --rupi-positive: 142.1 70.6% 45.3%; /* Green */
-    --rupi-negative: 0 84.2% 60.2%; /* Red */
+    --rupi-accent-muted: 142.1 30% 85%;
+    --rupi-positive: 142.1 40% 65%; /* Softer Green */
+    --rupi-negative: 0 65% 75%; /* Softer Red */
     --rupi-surface: 0 0% 97%;
     --rupi-surface-foreground: 240 10% 3.9%;
   }
@@ -58,12 +58,12 @@
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
 
-    /* Rupi theme colors - dark mode */
-    --rupi-accent: 142.1 70.6% 45.3%; /* Emerald Green */
+    /* Rupi theme colors - dark mode with softer colors */
+    --rupi-accent: 142.1 40% 65%; /* Softer Emerald Green */
     --rupi-accent-foreground: 0 0% 100%;
-    --rupi-accent-muted: 142.1 30% 25%;
-    --rupi-positive: 142.1 70.6% 45.3%; /* Green */
-    --rupi-negative: 0 84.2% 60.2%; /* Red */
+    --rupi-accent-muted: 142.1 25% 35%;
+    --rupi-positive: 142.1 40% 65%; /* Softer Green */
+    --rupi-negative: 0 65% 75%; /* Softer Red */
     --rupi-surface: 240 10% 13%;
     --rupi-surface-foreground: 0 0% 98%;
   }
