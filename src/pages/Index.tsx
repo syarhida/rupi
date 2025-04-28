@@ -205,7 +205,7 @@ const Index = () => {
       </div>
 
       {/* Floating Action Button for mobile */}
-      {isMobile && <Button onClick={() => openTransactionModal('expense')} size="lg" className="fixed bottom-20 right-4 h-14 w-14 rounded-full p-0">
+      {isMobile && <Button onClick={() => openTransactionModal('expense')} size="lg" className="fixed bottom-20 right-4 h-14 w-14 rounded-full p-0 text-emerald-500">
           <Plus className="h-6 w-6" />
         </Button>}
 
