@@ -20,7 +20,7 @@ export function MobileSummary({
         </p>
       </div>
 
-      <div className="rounded-2xl p-4 bg-slate-50">
+      <div className="rounded-2xl p-4 bg-zinc-300">
         <div className="flex items-center space-x-2 text-rupi-negative">
           <ArrowDownLeft className="h-5 w-5" />
           <span className="text-neutral-950">Expenses</span>
