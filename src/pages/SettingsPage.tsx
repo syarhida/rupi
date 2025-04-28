@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -7,21 +6,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-
 const SettingsPage = () => {
   const [accentColor, setAccentColor] = useState('green');
   const [currency, setCurrency] = useState('IDR');
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleSaveSettings = () => {
     toast({
       title: "Settings saved",
       description: "Your preferences have been updated successfully."
     });
   };
-
-  return (
-    <Layout>
+  return <Layout>
       <div className="space-y-6">
         <h1 className="text-2xl font-bold">Settings</h1>
 
@@ -33,7 +30,7 @@ const SettingsPage = () => {
           
           <TabsContent value="appearance" className="space-y-6">
             <div className="rupi-card space-y-4">
-              <h2 className="text-xl font-bold">Theme Customization</h2>
+              <h2 className="text-xl font-bold text-slate-50">Theme Customization</h2>
               
               <div className="grid gap-2">
                 <Label htmlFor="accent-color">Accent Color</Label>
@@ -78,8 +75,6 @@ const SettingsPage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default SettingsPage;
