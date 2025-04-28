@@ -66,7 +66,7 @@ export function WalletModal({
   return <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Dompet Baru</DialogTitle>
+          <DialogTitle>Create New Wallet</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
@@ -74,7 +74,7 @@ export function WalletModal({
             <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Cash Wallet" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="initial-balance" className="rounded-2xl px-0">Initial Balance (Rp)</Label>
+            <Label htmlFor="initial-balance" className="rounded-2xl">Initial Balance (Rp)</Label>
             <Input id="initial-balance" type="number" value={initialBalance} onChange={e => setInitialBalance(e.target.value)} placeholder="0" />
           </div>
           <div className="grid gap-2">
@@ -98,7 +98,7 @@ export function WalletModal({
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-emerald-500 hover:bg-emerald-400">Simpan</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>;
