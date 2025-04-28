@@ -148,7 +148,7 @@ const Index = () => {
               </div>
               
               <div className="flex flex-wrap gap-2">
-                <Button onClick={() => setIsWalletModalOpen(true)} className="flex-1 md:flex-none" variant="outline">
+                <Button onClick={() => setIsWalletModalOpen(true)} variant="outline" className="flex-1 md:flex-none text-slate-50">
                   <Plus size={18} className="mr-1" /> New Wallet
                 </Button>
                 <Button onClick={() => openTransactionModal('expense')} variant="destructive" className="flex-1 md:flex-none">
