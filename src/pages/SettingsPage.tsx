@@ -20,7 +20,7 @@ const SettingsPage = () => {
   };
   return <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold">Settings</h1>
+        <h1 className="text-2xl font-bold text-slate-50">Settings</h1>
 
         <Tabs defaultValue="appearance" className="w-full">
           <TabsList className="grid grid-cols-2 mb-6">
