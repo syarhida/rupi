@@ -1,8 +1,11 @@
+
 import React from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { ArrowDownLeft, ArrowUpRight, ArrowRight, Wallet } from 'lucide-react';
+
 export type TransactionType = 'income' | 'expense' | 'transfer';
+
 export interface Transaction {
   id: string;
   type: TransactionType;
@@ -13,17 +16,22 @@ export interface Transaction {
   walletId: string;
   toWalletId?: string;
 }
+
 interface TransactionListProps {
   transactions: Transaction[];
   limit?: number;
   showViewAll?: boolean;
+  onTransactionClick?: (transaction: Transaction) => void;
 }
+
 export function TransactionList({
   transactions,
   limit,
-  showViewAll = false
+  showViewAll = false,
+  onTransactionClick
 }: TransactionListProps) {
   const displayedTransactions = limit ? transactions.slice(0, limit) : transactions;
+  
   const formatDate = (date: string) => {
     const d = new Date(date);
     return {
@@ -36,6 +44,7 @@ export function TransactionList({
       })
     };
   };
+  
   const groupedTransactions = displayedTransactions.reduce((groups: Record<string, Transaction[]>, transaction) => {
     const date = transaction.date;
     if (!groups[date]) {
@@ -44,6 +53,7 @@ export function TransactionList({
     groups[date].push(transaction);
     return groups;
   }, {});
+  
   return <div className="space-y-6">
       {Object.entries(groupedTransactions).map(([date, dayTransactions]) => {
       const {
@@ -64,18 +74,36 @@ export function TransactionList({
             </div>
 
             <div className="space-y-2">
-              {dayTransactions.map(transaction => <div key={transaction.id} className="rupi-surface p-4">
+              {dayTransactions.map(transaction => (
+                <div 
+                  key={transaction.id} 
+                  className="rupi-surface p-4 cursor-pointer hover:bg-muted/10 transition-colors"
+                  onClick={() => onTransactionClick && onTransactionClick(transaction)}
+                >
                   <div className="flex justify-between">
                     <div className="space-y-1">
                       <div className="flex items-center space-x-3">
-                        <div className={`rounded-full p-2 ${transaction.type === 'expense' ? 'bg-rupi-negative/10 text-rupi-negative' : transaction.type === 'income' ? 'bg-rupi-positive/10 text-rupi-positive' : 'bg-muted text-muted-foreground'}`}>
-                          {transaction.type === 'expense' ? <ArrowDownLeft className="h-5 w-5" /> : transaction.type === 'income' ? <ArrowUpRight className="h-5 w-5" /> : <ArrowRight className="h-5 w-5" />}
+                        <div className={`rounded-full p-2 ${
+                          transaction.type === 'expense' ? 'bg-rupi-negative/10 text-rupi-negative' : 
+                          transaction.type === 'income' ? 'bg-rupi-positive/10 text-rupi-positive' : 
+                          'bg-muted text-muted-foreground'
+                        }`}>
+                          {transaction.type === 'expense' ? 
+                            <ArrowDownLeft className="h-5 w-5" /> : 
+                            transaction.type === 'income' ? 
+                            <ArrowUpRight className="h-5 w-5" /> : 
+                            <ArrowRight className="h-5 w-5" />
+                          }
                         </div>
                         <p className="font-medium">{transaction.description}</p>
                       </div>
                       <div className="flex items-center space-x-2 text-sm">
                         <p className="text-muted-foreground">{transaction.category}</p>
-                        <span className={`font-medium ${transaction.type === 'expense' ? 'text-rupi-negative' : transaction.type === 'income' ? 'text-rupi-positive' : 'text-muted-foreground'}`}>
+                        <span className={`font-medium ${
+                          transaction.type === 'expense' ? 'text-rupi-negative' : 
+                          transaction.type === 'income' ? 'text-rupi-positive' : 
+                          'text-muted-foreground'
+                        }`}>
                           {transaction.type === 'expense' ? '-' : transaction.type === 'income' ? '+' : ''}
                           {formatCurrency(transaction.amount)}
                         </span>
@@ -85,7 +113,8 @@ export function TransactionList({
                       <Wallet className="h-4 w-4" />
                     </div>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
           </div>;
     })}

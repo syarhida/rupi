@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -6,14 +7,16 @@ import { TransactionModal } from '@/components/TransactionModal';
 import { TransactionList, Transaction, TransactionType } from '@/components/TransactionList';
 import { generateSampleTransactions, generateSampleWallets, generateId } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { TransactionDetailModal } from '@/components/TransactionDetailModal';
+
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<Transaction[]>(generateSampleTransactions());
   const [wallets] = useState(generateSampleWallets());
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [transactionType, setTransactionType] = useState<TransactionType>('expense');
-  const {
-    toast
-  } = useToast();
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const { toast } = useToast();
+
   const handleAddTransaction = (transactionData: {
     type: TransactionType;
     amount: number;
@@ -43,11 +46,36 @@ const TransactionsPage = () => {
       description: `${transactionData.description} has been recorded successfully.`
     });
   };
+
+  const handleUpdateTransaction = (updatedTransaction: Transaction) => {
+    setTransactions(transactions.map(tx => 
+      tx.id === updatedTransaction.id ? updatedTransaction : tx
+    ));
+    toast({
+      title: "Transaction updated",
+      description: `${updatedTransaction.description} has been updated successfully.`
+    });
+  };
+
+  const handleDeleteTransaction = (transactionId: string) => {
+    setTransactions(transactions.filter(tx => tx.id !== transactionId));
+    toast({
+      title: "Transaction deleted",
+      description: "The transaction has been deleted successfully."
+    });
+  };
+
   const openTransactionModal = (type: TransactionType) => {
     setTransactionType(type);
     setIsTransactionModalOpen(true);
   };
-  return <Layout>
+
+  const handleTransactionClick = (transaction: Transaction) => {
+    setSelectedTransaction(transaction);
+  };
+
+  return (
+    <Layout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-slate-50">Transaksi</h1>
@@ -65,14 +93,37 @@ const TransactionsPage = () => {
         </div>
 
         <div className="rupi-card">
-          <TransactionList transactions={transactions} />
+          <TransactionList 
+            transactions={transactions} 
+            onTransactionClick={handleTransactionClick}
+          />
         </div>
       </div>
 
-      <TransactionModal open={isTransactionModalOpen} onClose={() => setIsTransactionModalOpen(false)} onSave={handleAddTransaction} wallets={wallets.map(wallet => ({
-      id: wallet.id,
-      name: wallet.name
-    }))} type={transactionType} />
-    </Layout>;
+      <TransactionModal 
+        open={isTransactionModalOpen} 
+        onClose={() => setIsTransactionModalOpen(false)} 
+        onSave={handleAddTransaction} 
+        wallets={wallets.map(wallet => ({
+          id: wallet.id,
+          name: wallet.name
+        }))} 
+        type={transactionType} 
+      />
+
+      <TransactionDetailModal
+        transaction={selectedTransaction}
+        wallets={wallets.map(wallet => ({
+          id: wallet.id,
+          name: wallet.name
+        }))}
+        open={!!selectedTransaction}
+        onClose={() => setSelectedTransaction(null)}
+        onUpdate={handleUpdateTransaction}
+        onDelete={handleDeleteTransaction}
+      />
+    </Layout>
+  );
 };
+
 export default TransactionsPage;

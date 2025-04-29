@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { WalletCard } from '@/components/WalletCard';
@@ -13,12 +14,15 @@ import { WalletModal } from '@/components/WalletModal';
 import { TransactionModal } from '@/components/TransactionModal';
 import { FinancialSummary } from '@/components/FinancialSummary';
 import { CashflowChart } from '@/components/CashflowChart';
+import { TransactionDetailModal } from '@/components/TransactionDetailModal';
+
 interface Wallet {
   id: string;
   name: string;
   balance: number;
   color: string;
 }
+
 interface Transaction {
   id: string;
   type: 'income' | 'expense' | 'transfer';
@@ -29,16 +33,16 @@ interface Transaction {
   walletId: string;
   toWalletId?: string;
 }
+
 const Index = () => {
   const [wallets, setWallets] = useState<Wallet[]>(generateSampleWallets());
   const [transactions, setTransactions] = useState<Transaction[]>(generateSampleTransactions());
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [transactionType, setTransactionType] = useState<'income' | 'expense' | 'transfer'>('expense');
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const isMobile = useIsMobile();
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
 
   // Calculate financial summary
   const totalIncome = transactions.filter(tx => tx.type === 'income').reduce((sum, tx) => sum + tx.amount, 0);
@@ -127,11 +131,37 @@ const Index = () => {
     });
   };
 
+  // Update an existing transaction
+  const handleUpdateTransaction = (updatedTransaction: Transaction) => {
+    setTransactions(transactions.map(tx => 
+      tx.id === updatedTransaction.id ? updatedTransaction : tx
+    ));
+    toast({
+      title: "Transaction updated",
+      description: `${updatedTransaction.description} has been updated successfully.`
+    });
+  };
+
+  // Delete a transaction
+  const handleDeleteTransaction = (transactionId: string) => {
+    setTransactions(transactions.filter(tx => tx.id !== transactionId));
+    toast({
+      title: "Transaction deleted",
+      description: "The transaction has been deleted successfully."
+    });
+  };
+
   // Open transaction modal with specific type
   const openTransactionModal = (type: 'income' | 'expense' | 'transfer') => {
     setTransactionType(type);
     setIsTransactionModalOpen(true);
   };
+
+  // Handle transaction click to open detail modal
+  const handleTransactionClick = (transaction: Transaction) => {
+    setSelectedTransaction(transaction);
+  };
+  
   return <Layout>
       <div className="space-y-4 pb-20 md:px-6 px-0">
         {isMobile && <>
@@ -174,33 +204,14 @@ const Index = () => {
                 </button>
               </div>
             </div>
-            
-            {/* Cashflow Chart & Recent Transactions */}
-            {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <CashflowChart data={cashflowData} />
-              
-              <div className="rupi-card">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">Recent Transactions</h2>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => openTransactionModal('expense')}
-                  >
-                    <Plus size={18} className="mr-1" /> New
-                  </Button>
-                </div>
-                <TransactionList 
-                  transactions={transactions} 
-                  limit={5}
-                  showViewAll 
-                />
-              </div>
-             </div> */}
           </>}
 
         <div className="space-y-4">
-          <TransactionList transactions={transactions} showViewAll />
+          <TransactionList 
+            transactions={transactions} 
+            showViewAll 
+            onTransactionClick={handleTransactionClick}
+          />
         </div>
       </div>
 
@@ -212,10 +223,29 @@ const Index = () => {
       {/* Modals */}
       <WalletModal open={isWalletModalOpen} onClose={() => setIsWalletModalOpen(false)} onSave={handleAddWallet} />
       
-      <TransactionModal open={isTransactionModalOpen} onClose={() => setIsTransactionModalOpen(false)} onSave={handleAddTransaction} wallets={wallets.map(wallet => ({
-      id: wallet.id,
-      name: wallet.name
-    }))} type={transactionType} />
+      <TransactionModal 
+        open={isTransactionModalOpen} 
+        onClose={() => setIsTransactionModalOpen(false)} 
+        onSave={handleAddTransaction} 
+        wallets={wallets.map(wallet => ({
+          id: wallet.id,
+          name: wallet.name
+        }))} 
+        type={transactionType} 
+      />
+
+      <TransactionDetailModal
+        transaction={selectedTransaction}
+        wallets={wallets.map(wallet => ({
+          id: wallet.id,
+          name: wallet.name
+        }))}
+        open={!!selectedTransaction}
+        onClose={() => setSelectedTransaction(null)}
+        onUpdate={handleUpdateTransaction}
+        onDelete={handleDeleteTransaction}
+      />
     </Layout>;
 };
+
 export default Index;
