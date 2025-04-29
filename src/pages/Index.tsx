@@ -190,7 +190,7 @@ const Index = () => {
             
             {/* Wallets */}
             <div>
-              <h2 className="text-xl font-bold mb-4">Dompet Anda</h2>
+              <h2 className="text-xl font-bold mb-4 text-slate-50">Dompet Anda</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {wallets.map(wallet => <WalletCard key={wallet.id} id={wallet.id} name={wallet.name} balance={wallet.balance} color={wallet.color} />)}
                 <button onClick={() => setIsWalletModalOpen(true)} className="border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 h-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors">
