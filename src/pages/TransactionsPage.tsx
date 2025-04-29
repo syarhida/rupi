@@ -1,13 +1,13 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { Plus, ArrowLeft } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { TransactionModal } from '@/components/TransactionModal';
 import { TransactionList, Transaction, TransactionType } from '@/components/TransactionList';
 import { generateSampleTransactions, generateSampleWallets, generateId } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { TransactionDetailModal } from '@/components/TransactionDetailModal';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<Transaction[]>(generateSampleTransactions());
@@ -16,7 +16,6 @@ const TransactionsPage = () => {
   const [transactionType, setTransactionType] = useState<TransactionType>('expense');
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const { toast } = useToast();
-  const isMobile = useIsMobile();
 
   const handleAddTransaction = (transactionData: {
     type: TransactionType;
@@ -92,12 +91,6 @@ const TransactionsPage = () => {
             </Button>
           </div>
         </div>
-        
-        {isMobile && (
-          <Button variant="outline" size="sm" className="w-full">
-            <ArrowLeft size={16} className="mr-1" /> Back to Dashboard
-          </Button>
-        )}
 
         <div className="rupi-card">
           <TransactionList 
