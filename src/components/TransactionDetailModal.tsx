@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -11,24 +10,24 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { formatCurrency } from '@/lib/utils';
 import { Edit, Trash2 } from 'lucide-react';
-
 interface TransactionDetailModalProps {
   transaction: Transaction | null;
-  wallets: { id: string; name: string }[];
+  wallets: {
+    id: string;
+    name: string;
+  }[];
   open: boolean;
   onClose: () => void;
   onUpdate: (updatedTransaction: Transaction) => void;
   onDelete: (transactionId: string) => void;
 }
-
 const formSchema = z.object({
   description: z.string().min(1, "Description is required"),
   amount: z.number().positive("Amount must be positive"),
   category: z.string().min(1, "Category is required"),
   walletId: z.string().min(1, "Wallet is required"),
-  toWalletId: z.string().optional(),
+  toWalletId: z.string().optional()
 });
-
 export function TransactionDetailModal({
   transaction,
   wallets,
@@ -39,7 +38,6 @@ export function TransactionDetailModal({
 }: TransactionDetailModalProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,20 +55,16 @@ export function TransactionDetailModal({
       toWalletId: transaction?.toWalletId || ''
     }
   });
-
   const resetState = () => {
     setIsEditing(false);
     setIsDeleting(false);
   };
-
   const handleClose = () => {
     resetState();
     onClose();
   };
-
   const handleUpdate = (values: z.infer<typeof formSchema>) => {
     if (!transaction) return;
-    
     onUpdate({
       ...transaction,
       description: values.description,
@@ -79,21 +73,16 @@ export function TransactionDetailModal({
       walletId: values.walletId,
       toWalletId: transaction.type === 'transfer' ? values.toWalletId : undefined
     });
-
     handleClose();
   };
-
   const handleDelete = () => {
     if (!transaction) return;
     onDelete(transaction.id);
     handleClose();
   };
-
-  return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
-        {transaction && !isEditing && !isDeleting && (
-          <>
+  return <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-md rounded-2xl">
+        {transaction && !isEditing && !isDeleting && <>
             <DialogHeader>
               <DialogTitle className="text-lg font-semibold">Transaction Details</DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground">
@@ -104,13 +93,8 @@ export function TransactionDetailModal({
             <div className="py-4 space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-medium">{transaction.description}</h3>
-                <span className={`font-bold ${
-                  transaction.type === 'expense' ? 'text-rupi-negative' :
-                  transaction.type === 'income' ? 'text-rupi-positive' :
-                  'text-muted-foreground'
-                }`}>
-                  {transaction.type === 'expense' ? '-' : 
-                   transaction.type === 'income' ? '+' : ''}
+                <span className={`font-bold ${transaction.type === 'expense' ? 'text-rupi-negative' : transaction.type === 'income' ? 'text-rupi-positive' : 'text-muted-foreground'}`}>
+                  {transaction.type === 'expense' ? '-' : transaction.type === 'income' ? '+' : ''}
                   {formatCurrency(transaction.amount)}
                 </span>
               </div>
@@ -132,35 +116,24 @@ export function TransactionDetailModal({
                   <p className="text-muted-foreground">Wallet</p>
                   <p>{wallets.find(w => w.id === transaction.walletId)?.name || 'Unknown'}</p>
                 </div>
-                {transaction.type === 'transfer' && transaction.toWalletId && (
-                  <div>
+                {transaction.type === 'transfer' && transaction.toWalletId && <div>
                     <p className="text-muted-foreground">To Wallet</p>
                     <p>{wallets.find(w => w.id === transaction.toWalletId)?.name || 'Unknown'}</p>
-                  </div>
-                )}
+                  </div>}
               </div>
             </div>
 
             <DialogFooter className="flex sm:justify-between !justify-between">
-              <Button 
-                variant="destructive"
-                onClick={() => setIsDeleting(true)}
-                className="gap-2"
-              >
+              <Button variant="destructive" onClick={() => setIsDeleting(true)} className="gap-2">
                 <Trash2 size={16} /> Delete
               </Button>
-              <Button 
-                onClick={() => setIsEditing(true)}
-                className="gap-2"
-              >
+              <Button onClick={() => setIsEditing(true)} className="gap-2">
                 <Edit size={16} /> Edit
               </Button>
             </DialogFooter>
-          </>
-        )}
+          </>}
 
-        {transaction && isEditing && (
-          <>
+        {transaction && isEditing && <>
             <DialogHeader>
               <DialogTitle>Edit Transaction</DialogTitle>
               <DialogDescription>
@@ -170,105 +143,68 @@ export function TransactionDetailModal({
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(handleUpdate)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="description" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Input placeholder="Description" {...field} />
                       </FormControl>
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={form.control}
-                  name="amount"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="amount" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Amount</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="number" 
-                          placeholder="0.00" 
-                          {...field} 
-                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                        />
+                        <Input type="number" placeholder="0.00" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                       </FormControl>
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="category" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Category</FormLabel>
                       <FormControl>
                         <Input placeholder="Category" {...field} />
                       </FormControl>
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                <FormField
-                  control={form.control}
-                  name="walletId"
-                  render={({ field }) => (
-                    <FormItem>
+                <FormField control={form.control} name="walletId" render={({
+              field
+            }) => <FormItem>
                       <FormLabel>Wallet</FormLabel>
-                      <Select 
-                        onValueChange={field.onChange} 
-                        defaultValue={field.value}
-                      >
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select a wallet" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {wallets.map((wallet) => (
-                            <SelectItem key={wallet.id} value={wallet.id}>
+                          {wallets.map(wallet => <SelectItem key={wallet.id} value={wallet.id}>
                               {wallet.name}
-                            </SelectItem>
-                          ))}
+                            </SelectItem>)}
                         </SelectContent>
                       </Select>
-                    </FormItem>
-                  )}
-                />
+                    </FormItem>} />
 
-                {transaction.type === 'transfer' && (
-                  <FormField
-                    control={form.control}
-                    name="toWalletId"
-                    render={({ field }) => (
-                      <FormItem>
+                {transaction.type === 'transfer' && <FormField control={form.control} name="toWalletId" render={({
+              field
+            }) => <FormItem>
                         <FormLabel>To Wallet</FormLabel>
-                        <Select 
-                          onValueChange={field.onChange} 
-                          defaultValue={field.value}
-                        >
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select a wallet" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {wallets.map((wallet) => (
-                              <SelectItem key={wallet.id} value={wallet.id}>
+                            {wallets.map(wallet => <SelectItem key={wallet.id} value={wallet.id}>
                                 {wallet.name}
-                              </SelectItem>
-                            ))}
+                              </SelectItem>)}
                           </SelectContent>
                         </Select>
-                      </FormItem>
-                    )}
-                  />
-                )}
+                      </FormItem>} />}
 
                 <DialogFooter>
                   <Button type="button" variant="outline" onClick={() => setIsEditing(false)}>
@@ -278,11 +214,9 @@ export function TransactionDetailModal({
                 </DialogFooter>
               </form>
             </Form>
-          </>
-        )}
+          </>}
 
-        {transaction && isDeleting && (
-          <>
+        {transaction && isDeleting && <>
             <DialogHeader>
               <DialogTitle>Delete Transaction</DialogTitle>
               <DialogDescription>
@@ -305,9 +239,7 @@ export function TransactionDetailModal({
                 Delete
               </Button>
             </DialogFooter>
-          </>
-        )}
+          </>}
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 }
