@@ -42,7 +42,7 @@ export function FinancialSummary({
             <Circle size={20} />
           </div>
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground">Saldo</p>
+            <p className="text-sm text-muted-foreground">Saldo Akhir</p>
             <p className={`text-lg font-bold ${balance >= 0 ? 'text-rupi-positive' : 'text-rupi-negative'}`}>
               {formatCurrency(balance)}
             </p>
