@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -36,8 +37,8 @@ const IncomePage = () => {
     };
     setTransactions([newTransaction, ...transactions]);
     toast({
-      title: 'Income added',
-      description: `${transactionData.description} has been recorded successfully.`
+      title: 'Pemasukan ditambahkan',
+      description: `${transactionData.description} berhasil dicatat.`
     });
   };
   return <Layout>
@@ -45,7 +46,7 @@ const IncomePage = () => {
         <div className="flex justify-between items-center px-0 py-0">
           <h1 className="text-2xl font-bold text-slate-50">Pemasukan</h1>
           <Button onClick={() => setIsTransactionModalOpen(true)} className="text-slate-50 bg-emerald-500 hover:bg-emerald-400 font-bold">
-            <Plus size={18} className="mr-1" /> New Income
+            <Plus size={18} className="mr-1" /> Pemasukan Baru
           </Button>
         </div>
 

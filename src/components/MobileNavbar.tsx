@@ -1,25 +1,26 @@
+
 import React from 'react';
 import { Home, Wallet, ArrowDownLeft, ArrowUpRight, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 export function MobileNavbar() {
   const navigation = [{
-    name: 'Home',
+    name: 'Beranda',
     href: '/',
     icon: Home
   }, {
-    name: 'Wallets',
+    name: 'Dompet',
     href: '/wallets',
     icon: Wallet
   }, {
-    name: 'Expense',
+    name: 'Pengeluaran',
     href: '/expenses',
     icon: ArrowDownLeft
   }, {
-    name: 'Income',
+    name: 'Pemasukan',
     href: '/income',
     icon: ArrowUpRight
   }, {
-    name: 'Settings',
+    name: 'Pengaturan',
     href: '/settings',
     icon: Settings
   }];

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
@@ -10,7 +11,7 @@ export function MobileHeader({
 }: MobileHeaderProps) {
   return <div className="space-y-2 pt-4 py-0">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-slate-50">Halo, User!</h1>
+        <h1 className="text-xl font-semibold text-slate-50">Halo, Pengguna!</h1>
         <Button variant="ghost" size="icon" className="rounded-full text-gray-950 bg-zinc-50">
           <ChevronDown className="h-5 w-5" />
         </Button>

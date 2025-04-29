@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { WalletCard } from '@/components/WalletCard';
@@ -31,8 +32,8 @@ const WalletsPage = () => {
     };
     setWallets([...wallets, newWallet]);
     toast({
-      title: "Wallet created",
-      description: `Your ${walletData.name} wallet has been created successfully.`
+      title: "Dompet dibuat",
+      description: `Dompet ${walletData.name} berhasil dibuat.`
     });
   };
   return <Layout>
@@ -40,7 +41,7 @@ const WalletsPage = () => {
         <div className="flex justify-between items-center py-0 px-0">
           <h1 className="text-2xl font-bold text-slate-50">Dompet Saya</h1>
           <Button onClick={() => setIsWalletModalOpen(true)} className="bg-emerald-500 hover:bg-emerald-400">
-            <Plus size={18} className="mr-1" /> New Wallet
+            <Plus size={18} className="mr-1" /> Dompet Baru
           </Button>
         </div>
 
@@ -48,7 +49,7 @@ const WalletsPage = () => {
           {wallets.map(wallet => <WalletCard key={wallet.id} id={wallet.id} name={wallet.name} balance={wallet.balance} color={wallet.color} />)}
           <button onClick={() => setIsWalletModalOpen(true)} className="border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 h-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors">
             <Plus size={24} />
-            <span className="mt-2">Add Wallet</span>
+            <span className="mt-2">Tambah Dompet</span>
           </button>
         </div>
       </div>

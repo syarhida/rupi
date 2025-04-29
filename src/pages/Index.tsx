@@ -55,7 +55,7 @@ const Index = () => {
     initialBalance: number;
     color: string;
   }) => {
-    const newWallet: Wallet = {
+    const newWallet = {
       id: `wallet-${generateId()}`,
       name: walletData.name,
       balance: walletData.initialBalance,
@@ -63,8 +63,8 @@ const Index = () => {
     };
     setWallets([...wallets, newWallet]);
     toast({
-      title: "Wallet created",
-      description: `Your ${walletData.name} wallet has been created successfully.`
+      title: "Dompet dibuat",
+      description: `Dompet ${walletData.name} berhasil dibuat.`
     });
   };
 
@@ -80,7 +80,7 @@ const Index = () => {
     const now = new Date();
 
     // Create new transaction
-    const newTransaction: Transaction = {
+    const newTransaction = {
       id: `tx-${generateId()}`,
       type: transactionData.type,
       amount: transactionData.amount,
@@ -126,8 +126,8 @@ const Index = () => {
 
     // Show success notification
     toast({
-      title: `${transactionData.type === 'income' ? 'Income' : transactionData.type === 'expense' ? 'Expense' : 'Transfer'} added`,
-      description: `${transactionData.description} has been recorded successfully.`
+      title: `${transactionData.type === 'income' ? 'Pemasukan' : transactionData.type === 'expense' ? 'Pengeluaran' : 'Transfer'} ditambahkan`,
+      description: `${transactionData.description} berhasil dicatat.`
     });
   };
 
@@ -137,8 +137,8 @@ const Index = () => {
       tx.id === updatedTransaction.id ? updatedTransaction : tx
     ));
     toast({
-      title: "Transaction updated",
-      description: `${updatedTransaction.description} has been updated successfully.`
+      title: "Transaksi diperbarui",
+      description: `${updatedTransaction.description} berhasil diperbarui.`
     });
   };
 
@@ -146,8 +146,8 @@ const Index = () => {
   const handleDeleteTransaction = (transactionId: string) => {
     setTransactions(transactions.filter(tx => tx.id !== transactionId));
     toast({
-      title: "Transaction deleted",
-      description: "The transaction has been deleted successfully."
+      title: "Transaksi dihapus",
+      description: "Transaksi berhasil dihapus."
     });
   };
 
@@ -179,13 +179,13 @@ const Index = () => {
               
               <div className="flex flex-wrap gap-2">
                 <Button onClick={() => setIsWalletModalOpen(true)} variant="outline" className="flex-1 md:flex-none text-slate-50 px-0 text-center">
-                  <Plus size={18} className="mr-1" /> New Wallet
+                  <Plus size={18} className="mr-1" /> Dompet Baru
                 </Button>
                 <Button onClick={() => openTransactionModal('expense')} variant="destructive" className="flex-1 md:flex-none">
-                  <Plus size={18} className="mr-1" /> Expense
+                  <Plus size={18} className="mr-1" /> Pengeluaran
                 </Button>
                 <Button onClick={() => openTransactionModal('income')} className="flex-1 md:flex-none bg-rupi-positive hover:bg-rupi-positive/90">
-                  <Plus size={18} className="mr-1" /> Income
+                  <Plus size={18} className="mr-1" /> Pemasukan
                 </Button>
               </div>
             </div>
@@ -195,12 +195,12 @@ const Index = () => {
             
             {/* Wallets */}
             <div>
-              <h2 className="text-xl font-bold mb-4">Your Wallets</h2>
+              <h2 className="text-xl font-bold mb-4">Dompet Anda</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {wallets.map(wallet => <WalletCard key={wallet.id} id={wallet.id} name={wallet.name} balance={wallet.balance} color={wallet.color} />)}
                 <button onClick={() => setIsWalletModalOpen(true)} className="border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center p-4 h-full text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors">
                   <Plus size={24} />
-                  <span className="mt-2">Add Wallet</span>
+                  <span className="mt-2">Tambah Dompet</span>
                 </button>
               </div>
             </div>

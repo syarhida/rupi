@@ -42,8 +42,8 @@ const TransactionsPage = () => {
     };
     setTransactions([newTransaction, ...transactions]);
     toast({
-      title: `${transactionData.type === 'income' ? 'Income' : transactionData.type === 'expense' ? 'Expense' : 'Transfer'} added`,
-      description: `${transactionData.description} has been recorded successfully.`
+      title: `${transactionData.type === 'income' ? 'Pemasukan' : transactionData.type === 'expense' ? 'Pengeluaran' : 'Transfer'} ditambahkan`,
+      description: `${transactionData.description} berhasil dicatat.`
     });
   };
 
@@ -52,16 +52,16 @@ const TransactionsPage = () => {
       tx.id === updatedTransaction.id ? updatedTransaction : tx
     ));
     toast({
-      title: "Transaction updated",
-      description: `${updatedTransaction.description} has been updated successfully.`
+      title: "Transaksi diperbarui",
+      description: `${updatedTransaction.description} berhasil diperbarui.`
     });
   };
 
   const handleDeleteTransaction = (transactionId: string) => {
     setTransactions(transactions.filter(tx => tx.id !== transactionId));
     toast({
-      title: "Transaction deleted",
-      description: "The transaction has been deleted successfully."
+      title: "Transaksi dihapus",
+      description: "Transaksi berhasil dihapus."
     });
   };
 
@@ -86,14 +86,14 @@ const TransactionsPage = () => {
               size="sm"
               className="transition-all duration-200 hover:scale-105"
             >
-              <Plus size={16} className="mr-1" /> Expense
+              <Plus size={16} className="mr-1" /> Pengeluaran
             </Button>
             <Button 
               onClick={() => openTransactionModal('income')} 
               size="sm" 
               className="bg-emerald-500 hover:bg-emerald-400 transition-all duration-200 hover:scale-105"
             >
-              <Plus size={16} className="mr-1" /> Income
+              <Plus size={16} className="mr-1" /> Pemasukan
             </Button>
             <Button 
               variant="secondary" 

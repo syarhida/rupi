@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -14,8 +15,8 @@ const SettingsPage = () => {
   } = useToast();
   const handleSaveSettings = () => {
     toast({
-      title: "Settings saved",
-      description: "Your preferences have been updated successfully."
+      title: "Pengaturan tersimpan",
+      description: "Preferensi Anda telah diperbarui."
     });
   };
   return <Layout>
@@ -33,17 +34,17 @@ const SettingsPage = () => {
               <h2 className="text-xl font-bold text-slate-50">Tema</h2>
               
               <div className="grid gap-2">
-                <Label htmlFor="accent-color">Accent Color</Label>
+                <Label htmlFor="accent-color">Warna Aksen</Label>
                 <Select value={accentColor} onValueChange={setAccentColor}>
                   <SelectTrigger id="accent-color">
-                    <SelectValue placeholder="Select accent color" />
+                    <SelectValue placeholder="Pilih warna aksen" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="green">Green</SelectItem>
-                    <SelectItem value="blue">Blue</SelectItem>
-                    <SelectItem value="purple">Purple</SelectItem>
-                    <SelectItem value="orange">Orange</SelectItem>
-                    <SelectItem value="pink">Pink</SelectItem>
+                    <SelectItem value="green">Hijau</SelectItem>
+                    <SelectItem value="blue">Biru</SelectItem>
+                    <SelectItem value="purple">Ungu</SelectItem>
+                    <SelectItem value="orange">Jingga</SelectItem>
+                    <SelectItem value="pink">Merah Muda</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -57,14 +58,14 @@ const SettingsPage = () => {
               <h2 className="text-xl font-bold text-slate-50">Wilayah</h2>
               
               <div className="grid gap-2">
-                <Label htmlFor="currency">Currency</Label>
+                <Label htmlFor="currency">Mata Uang</Label>
                 <Select value={currency} onValueChange={setCurrency}>
                   <SelectTrigger id="currency">
-                    <SelectValue placeholder="Select currency" />
+                    <SelectValue placeholder="Pilih mata uang" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="IDR">Indonesian Rupiah (Rp)</SelectItem>
-                    <SelectItem value="USD">US Dollar ($)</SelectItem>
+                    <SelectItem value="IDR">Rupiah Indonesia (Rp)</SelectItem>
+                    <SelectItem value="USD">Dolar Amerika ($)</SelectItem>
                     <SelectItem value="EUR">Euro (€)</SelectItem>
                   </SelectContent>
                 </Select>

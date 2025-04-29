@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -36,8 +37,8 @@ const ExpensesPage = () => {
     };
     setTransactions([newTransaction, ...transactions]);
     toast({
-      title: 'Expense added',
-      description: `${transactionData.description} has been recorded successfully.`
+      title: 'Pengeluaran ditambahkan',
+      description: `${transactionData.description} berhasil dicatat.`
     });
   };
   return <Layout>
@@ -45,7 +46,7 @@ const ExpensesPage = () => {
         <div className="flex justify-between items-center mx-0 px-0 py-0">
           <h1 className="text-2xl font-bold text-slate-50">Pengeluaran</h1>
           <Button variant="destructive" onClick={() => setIsTransactionModalOpen(true)}>
-            <Plus size={18} className="mr-1" /> New Expense
+            <Plus size={18} className="mr-1" /> Pengeluaran Baru
           </Button>
         </div>
 
