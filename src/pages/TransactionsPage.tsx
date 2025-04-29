@@ -80,19 +80,33 @@ const TransactionsPage = () => {
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-slate-50">Transaksi</h1>
           <div className="flex gap-2">
-            <Button variant="destructive" onClick={() => openTransactionModal('expense')} size="sm">
+            <Button 
+              variant="destructive" 
+              onClick={() => openTransactionModal('expense')} 
+              size="sm"
+              className="transition-all duration-200 hover:scale-105"
+            >
               <Plus size={16} className="mr-1" /> Expense
             </Button>
-            <Button onClick={() => openTransactionModal('income')} size="sm" className="bg-emerald-500 hover:bg-emerald-400">
+            <Button 
+              onClick={() => openTransactionModal('income')} 
+              size="sm" 
+              className="bg-emerald-500 hover:bg-emerald-400 transition-all duration-200 hover:scale-105"
+            >
               <Plus size={16} className="mr-1" /> Income
             </Button>
-            <Button variant="secondary" onClick={() => openTransactionModal('transfer')} size="sm">
+            <Button 
+              variant="secondary" 
+              onClick={() => openTransactionModal('transfer')} 
+              size="sm"
+              className="transition-all duration-200 hover:scale-105"
+            >
               <Plus size={16} className="mr-1" /> Transfer
             </Button>
           </div>
         </div>
 
-        <div className="rupi-card">
+        <div className="rupi-card transition-all duration-300 hover:shadow-lg">
           <TransactionList 
             transactions={transactions} 
             onTransactionClick={handleTransactionClick}
