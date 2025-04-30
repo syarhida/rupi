@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
@@ -11,9 +11,18 @@ interface MobileHeaderProps {
 export function MobileHeader({
   balance
 }: MobileHeaderProps) {
+  const [accountName, setAccountName] = useState('Pengguna');
+  
+  useEffect(() => {
+    const savedAccountName = localStorage.getItem('accountName');
+    if (savedAccountName) {
+      setAccountName(savedAccountName);
+    }
+  }, []);
+  
   return <div className="space-y-2 pt-4 py-0">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-slate-50">Halo, Pengguna!</h1>
+        <h1 className="text-xl font-semibold text-slate-50">Halo, {accountName}!</h1>
         <Button variant="ghost" size="icon" className="rounded-full text-slate-50 bg-neutral-900 hover:bg-neutral-800">
           <ChevronDown className="h-5 w-5" />
         </Button>
