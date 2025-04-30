@@ -14,7 +14,14 @@ export function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayChildren, setDisplayChildren] = useState(children);
+  const [layoutType, setLayoutType] = useState<'mobile' | 'desktop' | null>(null);
 
+  // Set initial layout type based on device detection
+  useEffect(() => {
+    setLayoutType(isMobile ? 'mobile' : 'desktop');
+  }, [isMobile]);
+
+  // Handle content transition when route changes
   useEffect(() => {
     setIsAnimating(true);
     const timer = setTimeout(() => {
@@ -25,9 +32,15 @@ export function Layout({ children }: LayoutProps) {
     return () => clearTimeout(timer);
   }, [children, location.pathname]);
 
+  // Render nothing until we know what type of layout to use
+  if (layoutType === null) {
+    return null;
+  }
+
+  // Once we know the layout type, maintain it throughout the transition
   return (
     <div className="min-h-screen bg-background dark">
-      {isMobile ? (
+      {layoutType === 'mobile' ? (
         <div className="flex flex-col h-screen">
           <main className={`flex-1 overflow-y-auto no-scrollbar pb-16 px-[16px] py-[16px] transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'animate-slide-in'}`}>
             {displayChildren}
