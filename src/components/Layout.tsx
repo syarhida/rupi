@@ -41,16 +41,16 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background dark">
       {layoutType === 'mobile' ? (
-        <div className="flex flex-col h-screen">
-          <main className={`flex-1 overflow-y-auto no-scrollbar pb-16 px-[16px] py-[16px] transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'animate-slide-in'}`}>
+        <div className="flex flex-col h-screen bg-background">
+          <main className={`flex-1 overflow-y-auto no-scrollbar pb-16 px-[16px] py-[16px] transition-opacity duration-300 bg-background ${isAnimating ? 'opacity-0' : 'animate-slide-in'}`}>
             {displayChildren}
           </main>
           <MobileNavbar />
         </div>
       ) : (
-        <div className="flex h-screen">
+        <div className="flex h-screen bg-background">
           <Sidebar />
-          <main className={`flex-1 overflow-y-auto no-scrollbar p-6 transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'animate-slide-in'}`}>
+          <main className={`flex-1 overflow-y-auto no-scrollbar p-6 transition-opacity duration-300 bg-background ${isAnimating ? 'opacity-0' : 'animate-slide-in'}`}>
             {displayChildren}
           </main>
         </div>
