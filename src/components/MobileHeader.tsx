@@ -1,10 +1,13 @@
+
 import React from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
+
 interface MobileHeaderProps {
   balance: number;
 }
+
 export function MobileHeader({
   balance
 }: MobileHeaderProps) {

@@ -34,7 +34,7 @@ export function MobileNavbar() {
           <Link 
             key={item.name} 
             to={item.href} 
-            className="flex flex-col items-center py-2.5 px-3 text-sm"
+            className="flex flex-col items-center py-2.5 px-3 text-sm transition-colors duration-200"
           >
             <item.icon 
               className={`h-6 w-6 ${item.href === window.location.pathname ? 'text-primary' : 'text-muted-foreground'}`} 
